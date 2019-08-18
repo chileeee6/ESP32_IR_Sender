@@ -134,8 +134,8 @@ void loop() {
       default:
         // 送信するものがなくなったとき
         duty = DUTY_OFF;
-        // Start an alarm
-        timerENd(timer);
+        // Stop an alarm
+        timerEnd(timer);
         break;
     }
 
