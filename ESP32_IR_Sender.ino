@@ -78,6 +78,7 @@ void setup() {
 
   pinMode(IR_OUT, OUTPUT);
 
+  // 周波数38*1000(Hz)、1波長を2の6乗(64)個に分割する
   ledcSetup(0,38000,6);
   ledcAttachPin(IR_OUT, 0);
   
@@ -94,18 +95,15 @@ void setup() {
 
   // Attach onTimer function to our timer.
   timerAttachInterrupt(timer, &onTimer, true);
-
-  // Set alarm to call onTimer function every second (value in microseconds).
+  
+  // Set alarm to call onTimer function every "tick_us" microseconds.
   // Repeat the alarm (third parameter)
-
-  // 
   timerAlarmWrite(timer, tick_us, true);
 
   // Start an alarm
   timerAlarmEnable(timer);
   
 }
-
 
 byte sendchar = 0;
 byte out = 0;
@@ -147,7 +145,7 @@ void loop() {
 
     ledcWrite(0, duty);
   }else{
-    // 38kHzの周期の約半分。電源を消費しそうなのでloopをフル稼働はさせない。
+    // 38kHzの周期の約半分。電気を消費しそうなのでloopをフル稼働はさせない。
     delayMicroseconds(13);
   }
 }
