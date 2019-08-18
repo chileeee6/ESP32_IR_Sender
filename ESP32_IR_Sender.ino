@@ -17,8 +17,8 @@ int tick_us = 562;
 
 // 1bitが0のときと1のときのtickの長さ
 // ※最初のtickは点滅tick、それ以外は消灯tick
-byte tick_one_off = 4;
-byte tick_zero_off = 2;
+byte tick_one_length = 4;
+byte tick_zero_length = 2;
 
 // 実際に送信する内容
 byte ir_buffer[20];
@@ -73,8 +73,9 @@ void setup() {
 
   ir_buffer_size = 4;
 
-  signalInitialize();
 #endif
+
+  signalInitialize();
 
   pinMode(IR_OUT, OUTPUT);
 
@@ -165,7 +166,7 @@ void checkTick(){
   ir_tick_pointer++;
   
   // 次のtickから送信するビットが変わるとき
-  if ((out && (ir_tick_pointer == tick_one_off)) || (!out && (ir_tick_pointer == tick_zero_off))){
+  if ((out && (ir_tick_pointer == tick_one_length)) || (!out && (ir_tick_pointer == tick_zero_length))){
     ir_tick_pointer = 0;
     buffer_bit_pointer++;
     
